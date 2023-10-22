@@ -37,6 +37,8 @@ void createFolderStructureAndFiles(String moduleTitle) {
   if (!repoDir.existsSync()) {
     print("-Creating repository directory........");
     repoDir.createSync();
+    createAbstractRepo(moduleTitle, repoDir);
+    createRepoImpl(moduleTitle, repoDir);
   }
 
   if (!modelDir.existsSync()) {
@@ -74,6 +76,38 @@ void createServiceWithTemplate(String title, dir) {
 
   File("${dir.path}/${title.toLowerCase()}_service.dart")
       .writeAsStringSync(serviceTemplate);
+}
+
+void createAbstractRepo(String title, dir) {
+  String newTitle = capitalize(title);
+  print("--Writing $newTitle abstract repository......");
+  String abstractRepoTemplate = '''
+  abstract class ${newTitle}Repository {
+
+  }
+  ''';
+
+  File("${dir.path}/${title.toLowerCase()}_repository.dart")
+      .writeAsStringSync(abstractRepoTemplate);
+}
+
+void createRepoImpl(String title, dir) {
+  String newTitle = capitalize(title);
+  print("--Writing $newTitle abstract repository......");
+  String repoImplTemplate = '''
+  import '${title.toLowerCase()}_repository.dart';
+  import '../service/${title.toLowerCase()}_service.dart';
+
+  class ${newTitle}RepositoryImpl implements ${newTitle}Repository {
+
+    final ${newTitle}Service _service;
+
+    ${newTitle}RepositoryImpl({${newTitle}Service? service}) : _service = service ?? ${newTitle}Service();
+  }
+  ''';
+
+  File("${dir.path}/${title.toLowerCase()}_repository_impl.dart")
+      .writeAsStringSync(repoImplTemplate);
 }
 
 String capitalize(String word) {
