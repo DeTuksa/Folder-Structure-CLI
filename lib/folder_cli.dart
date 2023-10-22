@@ -5,8 +5,14 @@ int calculate() {
 }
 
 void createFolderStructureAndFiles(String moduleTitle) {
+  var baseDir = Directory('lib/modules');
+
+  if (!baseDir.existsSync()) {
+    baseDir.createSync();
+  }
+
   ///This line defines the module directory
-  var rootDir = Directory('lib/${moduleTitle.toLowerCase()}');
+  var rootDir = Directory('lib/modules/${moduleTitle.toLowerCase()}');
   print(moduleTitle);
 
   ///Creation of the module directory
