@@ -54,6 +54,8 @@ void createFolderStructureAndFiles(String moduleTitle) {
   if (!datasourceDir.existsSync()) {
     print("-Creating datasource directory........");
     datasourceDir.createSync();
+    createAbstractDataSource(moduleTitle, datasourceDir);
+    createDataSourceImpl(moduleTitle, datasourceDir);
   }
 
   if (!presenterDir.existsSync()) {
@@ -93,7 +95,7 @@ void createAbstractRepo(String title, dir) {
 
 void createRepoImpl(String title, dir) {
   String newTitle = capitalize(title);
-  print("--Writing $newTitle abstract repository......");
+  print("--Writing $newTitle repository implement......");
   String repoImplTemplate = '''
   import '${title.toLowerCase()}_repository.dart';
   import '../service/${title.toLowerCase()}_service.dart';
@@ -108,6 +110,37 @@ void createRepoImpl(String title, dir) {
 
   File("${dir.path}/${title.toLowerCase()}_repository_impl.dart")
       .writeAsStringSync(repoImplTemplate);
+}
+
+void createAbstractDataSource(String title, dir) {
+  String newTitle = capitalize(title);
+  print("--Writing $newTitle abstract datasource......");
+  String abstractDataSourceTemplate = '''
+  abstract class ${newTitle}DataSource {
+
+  }
+  ''';
+
+  File("${dir.path}/${title.toLowerCase()}_datasource.dart")
+      .writeAsStringSync(abstractDataSourceTemplate);
+}
+
+void createDataSourceImpl(String title, dir) {
+  String newTitle = capitalize(title);
+  print("--Writing $newTitle datasource implement......");
+  String dataSourceImplTemplate = '''
+  import '${title.toLowerCase()}_datasource.dart';
+  import '../../infrastructure/repository/${title.toLowerCase()}_repository.dart';
+  import '../../infrastructure/repository/${title.toLowerCase()}_repository_impl.dart';
+
+  class ${newTitle}DataSourceImpl implements ${newTitle}DataSource {
+
+    final ${newTitle}Repository repository = ${newTitle}RepositoryImpl();
+  }
+  ''';
+
+  File("${dir.path}/${title.toLowerCase()}_datasource_impl.dart")
+      .writeAsStringSync(dataSourceImplTemplate);
 }
 
 String capitalize(String word) {
