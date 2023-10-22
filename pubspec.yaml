@@ -1,7 +1,7 @@
 name: folder_cli
 description: >-
   Folder_Cli allows the creation of folder structures using a modular appraoch. It can be used like this `folder_cli -c 'create' -a 'module_name'`.
-version: 1.0.1
+version: 1.0.2
 repository: https://github.com/DeTuksa/Folder-Structure-CLI
 
 environment:
