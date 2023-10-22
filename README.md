@@ -1,2 +1,2 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+Folder_Cli is a command-line application that allows the creation of folder structures using a modular appraoch.
+It can be used like this `folder_cli -c 'create' -a 'module_name'`.

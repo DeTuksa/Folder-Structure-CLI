@@ -1,10 +1,14 @@
 name: folder_cli
-description: A sample command-line application.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: >-
+  Folder_Cli allows the creation of folder structures using a modular appraoch. It can be used like this `folder_cli -c 'create' -a 'module_name'`.
+version: 1.0.1
+repository: https://github.com/DeTuksa/Folder-Structure-CLI
 
 environment:
   sdk: ^3.0.3
+
+executables:
+  folder_cli:
 
 # Add regular dependencies here.
 dependencies:
